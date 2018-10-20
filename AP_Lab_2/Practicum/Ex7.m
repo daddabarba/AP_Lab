@@ -1,5 +1,5 @@
+addpath("./AdditionalFunction");
 
-%{
 %QUESTION A
 disp("QUESTION A");
 
@@ -44,7 +44,7 @@ for i = 1:length(delays)
     delay = delays(i);
    
     %Run simulation
-    disp("Running two current pulses of 300 muA/cm^2. with " + ...
+    disp("Running two current pulses of 300 uA/cm^2. with " + ...
         delay + "ms delay");
     
     sim = calc7(param7(I, t, delay, I, I0));
@@ -67,7 +67,7 @@ for i = 1:length(delays)
     delay = delays(i);
    
     %Run simulation
-    disp("Running two current pulses of 300 muA/cm^2. with " + ...
+    disp("Running two current pulses of 300 uA/cm^2. with " + ...
         delay + "ms delay");
     
     sim = calc7(param7(I, t, delay, I, I0));
@@ -97,22 +97,22 @@ text(x_lim(1),y_lim(2)-2,studentname);
 %Set plot style
 setPlotStyle();
 
-%}
+
 %QUESTION E
 wait();
 disp("QUESTION E");
 
 T = 39; %ms
 %Below threshold delay
-disp("response with 2 300 muA/cm^2 pulses with delay " + (T-1) + " ms");
+disp("response with 2 300 uA/cm^2 pulses with delay " + (T-1) + " ms");
 plotresult(calc7(param7(I, t, T-1, I, I0)));
 
 %Above threshold delay
 wait();
-disp("response with 2 300 muA/cm^2 pulses with delay " + (T) + " ms");
+disp("response with 2 300 uA/cm^2 pulses with delay " + (T) + " ms");
 plotresult(calc7(param7(I, t, T, I, I0)));
 
-%{
+
 %QUESTION F
 wait();
 disp("QUESTION F");
@@ -160,15 +160,24 @@ for I0 = I0s
 end
 
 %Set threshold
-T = 118;
+T_min = 118;
+T_max = 251;
 
 %Show threshold value
-disp("Running simulation with I0=" + (T-1) + "(below threshold)");
-plotresult7(T-1, [], 6000);
+disp("Running simulation with I0=" + (T_min-1) + "(before threshold interval)");
+plotresult7(T_min-1, [], 6000);
 
 wait();
-disp("Running simulation with I0=" + T + "(above threshold)");
-plotresult7(T, [], 6000);
+disp("Running simulation with I0=" + T_min + "(in threshold interval)");
+plotresult7(T_min, [], 6000);
+wait();
+
+disp("Running simulation with I0=" + T_max + "(in threshold interval)");
+plotresult7(T_max, [], 6000);
+wait();
+
+disp("Running simulation with I0=" + (T_max + 1) + "(after threshold interval)");
+plotresult7(T_max+1, [], 6000);
 
 
 %QUESTION H
@@ -211,7 +220,7 @@ plot(I0s, frequencies, 'o-');
 title({"Frequency of membrane voltage", ...
     "with respect to injected current amplitude"});
 
-xlabel("Injected current amplitude (muA/cm^2)");
+xlabel("Injected current amplitude ({\mu}A/cm^2)");
 ylabel("voltage frequency (mHz = 1/ms)");
 
 x_lim = xlim;
@@ -220,4 +229,3 @@ text(x_lim(1),y_lim(2)-2,studentname);
 
 %Set plot style
 setPlotStyle();
-%}
