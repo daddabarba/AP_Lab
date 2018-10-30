@@ -43,6 +43,7 @@ out.V_m=V_m;
 out.I_inj = I_inj(t,    par);
 out.I_c =   I_c  (t,V_m,par);
 out.I_r =   I_r    (V_m,par);
+out.I_m = out.I_c + out.I_r;
 
 end %main function
 

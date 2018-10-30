@@ -1,12 +1,50 @@
 addpath("./AdditionalFunction");
-
+%%
 %QUESTION A
 disp("QUESTION A");
 
 %Plot default graph
 plotresult(calc7(param7));
 
+%%
+%QUESTION B
+disp("QUESTION B");
 
+%Set current amplitudes
+Is = 0:20:200;
+
+%Init result vector
+maxV = zeros(1,length(Is));
+
+for i = 1:length(Is)
+   %Get current
+   I = Is(i);
+   
+   %Run simulation
+   r = calc7(param7(I));
+   
+   %Store maximum voltage
+   maxV(i) = max(r.V);
+end
+
+%Plot second peak amplitude as a function of delay
+plot(Is,maxV, 'o-');
+
+%Set plot captions
+title({"Peak voltage from second injected impulse", ...
+    "with respect to injected current amplitude"});
+
+xlabel("Stimulus Amplitude (\muA/cm^2)");
+ylabel("peak voltage (mV)");
+
+x_lim = xlim;
+y_lim = ylim;
+text(x_lim(1),y_lim(2),studentname);
+
+%Set plot style
+setPlotStyle();
+
+%%
 %QUESTION C
 wait();
 disp("QUESTION C");
@@ -22,7 +60,7 @@ disp("Above threshold simulation");
 I1 = 160; %muA/cm^2
 plotresult(calc7(param7(I1)));
 
-
+%%
 %QUESTION D
 wait();
 disp("QUESTION D");
@@ -97,7 +135,7 @@ text(x_lim(1),y_lim(2)-2,studentname);
 %Set plot style
 setPlotStyle();
 
-
+%%
 %QUESTION E
 wait();
 disp("QUESTION E");
@@ -112,7 +150,7 @@ wait();
 disp("response with 2 300 uA/cm^2 pulses with delay " + (T) + " ms");
 plotresult(calc7(param7(I, t, T, I, I0)));
 
-
+%%
 %QUESTION F
 wait();
 disp("QUESTION F");
@@ -140,7 +178,7 @@ for i = 1:size(P_starts, 1)
     wait();
 end
 
-
+%%
 %QUESTION G
 wait();
 disp("QUESTION G");
@@ -179,21 +217,32 @@ wait();
 disp("Running simulation with I0=" + (T_max + 1) + "(after threshold interval)");
 plotresult7(T_max+1, [], 6000);
 
-
+%%
 %QUESTION H
 wait();
 disp("QUESTION H");
 
 %Run simulation with given parameters
-plotresult(calc7(param7(10,5,0,0,150)));
+p = param7(10,5,0,0,150);
+r = calc7(p);
+plotresult(r);
 
+%Compute eigenvalues
+J = getJacobian(r.V(1),r.w(1),p);
+lambda = eig(J);
 
+disp("The Jacobian matrix is: ");
+disp(J);
+disp("The eigenvalues are: ");
+disp(lambda);
+
+%%
 %QUESTION I
 wait();
 disp("QUESTION I");
 
 %Set I0 values to test out
-I0s = 118:1:138;
+I0s = 118:1:251;
 
 %Initialize result vector
 frequencies = zeros(1,length(I0s));
@@ -225,7 +274,12 @@ ylabel("voltage frequency (mHz = 1/ms)");
 
 x_lim = xlim;
 y_lim = ylim;
-text(x_lim(1),y_lim(2)-2,studentname);
+
+hold on;
+text(x_lim(1),y_lim(2),studentname);
+hold off;
 
 %Set plot style
 setPlotStyle();
+
+%%

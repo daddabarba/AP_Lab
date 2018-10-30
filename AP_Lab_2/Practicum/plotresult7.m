@@ -30,8 +30,9 @@ hold on
 plot(r.V_lin,r.V_null,'g','LineWidth',3),
 plot(r.V_lin,r.w_null,'m','LineWidth',3); 
 plot(r.V,r.w,'r.-','Linewidth',2); 
+plot(r.V(1),r.w(1),'s', 'MarkerSize', 16);
 hold off;
-legend('gradient','V nullcline','w nullcline','trajectory')
+legend('gradient','V nullcline','w nullcline','trajectory','starting state')
 xlabel('Membrane voltage V (mV)'); ylabel('K channel gating activation w ()');
 text(-100,1.01,studentname);
 r.handle=h;
